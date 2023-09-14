@@ -2,7 +2,7 @@ const express = require('express');
 const connection = require("./config/db");
 const {userRouter} = require("./routes/User.route")
 const {noteRouter} = require("./routes/Note.route")
-const {authenticate} = require("./middleware/authenticate.middleware")
+// const {authenticate} = require("./middleware/authenticate.middleware")
 const cors = require("cors")
 
 const app = express()
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/users", userRouter)
-app.use(authenticate)
+// app.use(authenticate)
 app.use("/notes", noteRouter)
 
 

@@ -1,5 +1,8 @@
 const express = require("express");
 const {NoteModel} = require("../models/Note.model")
+const {authenticate} = require("../middleware/authenticate.middleware")
+
+const app = express()
 
 const noteRouter = express.Router();
 
@@ -10,6 +13,8 @@ noteRouter.get("/", async (req, res) => {
     res.send(notes);
 })
 
+
+app.use(authenticate)
 noteRouter.post("/create", async (req, res) => {
 
     const payload = req.body
