@@ -1,20 +1,31 @@
 const express = require("express");
 const {NoteModel} = require("../models/Note.model")
-const {authenticate} = require("../middleware/authenticate.middleware")
 
-const app = express()
+
 
 const noteRouter = express.Router();
 
 noteRouter.get("/", async (req, res) => {
+      const {page, limit} = req.query
+      console.log(page, limit)
 
-    const notes = await NoteModel.find()
+      const startIndex = (page - 1) * limit;
+      
+    const notes = await NoteModel.find().skip(startIndex).limit(limit)
 
     res.send(notes);
 })
 
+noteRouter.get("/:id", async (req, res) => {
+    const id = req.params.id
+   
+    
+  const notes = await NoteModel.find({_id:id})
 
-app.use(authenticate)
+  res.send(notes);
+})
+
+
 noteRouter.post("/create", async (req, res) => {
 
     const payload = req.body
