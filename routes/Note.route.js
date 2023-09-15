@@ -7,13 +7,15 @@ const noteRouter = express.Router();
 
 noteRouter.get("/", async (req, res) => {
       const {page, limit} = req.query
-      console.log(page, limit)
+      
 
       const startIndex = (page - 1) * limit;
+      const count = await NoteModel.find()
+      console.log(count.length)
       
     const notes = await NoteModel.find().skip(startIndex).limit(limit)
 
-    res.send(notes);
+    res.send({data:notes, totalCount: count.length});
 })
 
 noteRouter.get("/:id", async (req, res) => {
